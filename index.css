@@ -352,8 +352,7 @@ html{
     margin: 30px;
     padding: 30px;
     gap: 10px;
-    /* background-image: url(https://media.geeksforgeeks.org/wp-content/uploads/20210723050322/Lineargradient2-660x322.png); */
-    background-color: rgb(47, 81, 81);
+    background-image: url(https://media.geeksforgeeks.org/wp-content/uploads/20210723050322/Lineargradient2-660x322.png);
     background-repeat: no-repeat;
     background-size: cover;
     align-items: center;
