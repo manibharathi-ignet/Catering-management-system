@@ -352,7 +352,8 @@ html{
     margin: 30px;
     padding: 30px;
     gap: 10px;
-    background-image: url(https://media.geeksforgeeks.org/wp-content/uploads/20210723050322/Lineargradient2-660x322.png);
+    /* background-image: url(https://media.geeksforgeeks.org/wp-content/uploads/20210723050322/Lineargradient2-660x322.png); */
+    background-color: rgba(2, 158, 179, 0.977);
     background-repeat: no-repeat;
     background-size: cover;
     align-items: center;
@@ -368,7 +369,7 @@ html{
 }
 #formSection h1{
     font-size: 3rem;
-    color: crimson;
+    color: bisque;
     margin-bottom: 20px;
 }
 #formSection h3{
@@ -489,15 +490,16 @@ footer{
 
 
 #makeContact h1{
-    font-size: 3rem;
+    color: bisque;
+    font-size: 2.5rem;
     margin-bottom: 30px;
 }
 #makeContact h2{
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin-bottom: 20px;
 }
 #makeContact h5{
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     margin-bottom: 20px;
 }
 
@@ -505,11 +507,12 @@ footer{
 
 
 #loc h1{
-    font-size: 3rem;
+    color: bisque;
+    font-size: 2.5rem;
     margin-bottom: 30px;
 }
 #loc h5{
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 40px;
 }
 
