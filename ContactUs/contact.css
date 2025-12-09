@@ -1,5 +1,10 @@
+html,body{
+    width: 100vw;
+    overflow: hidden;
+}
 #all{
     width: 100vw;
+    padding: 0px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -7,24 +12,21 @@
 header{
     position: fixed;
     overflow: hidden;
+    background-color: rgba(220, 20, 60, 0.603);
 }
 #logoDiv{
     overflow: hidden;
 }
-
-#cover{
-    height: 50vh;
-    overflow: hidden;
+#logoDiv img{
+    max-width: 120px;
 }
-#coverImg{
-    height: 100%;
+
+#coverImg img{
+    height: auto;
     width: 100%;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
+    /* display: block; */
 }
 #coverContent{
 
     position: absolute;
-    z-index: 3;
 }
