@@ -1,0 +1,30 @@
+#all{
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+header{
+    position: fixed;
+    overflow: hidden;
+}
+#logoDiv{
+    overflow: hidden;
+}
+
+#cover{
+    height: 50vh;
+    overflow: hidden;
+}
+#coverImg{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+#coverContent{
+
+    position: absolute;
+    z-index: 3;
+}
