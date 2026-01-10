@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annamal Catering - Premium Catering Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #DC143C;
+            --primary-dark: #8B0000;
+            --primary-light: #FFE4E1;
+            --accent-color: #FF6B6B;
+            --text-dark: #2C3E50;
+            --text-light: #6C757D;
+            --bg-light: #FFF5F5;
+            --white: #FFFFFF;
+            --shadow: 0 10px 40px rgba(220, 20, 60, 0.1);
+            --shadow-hover: 0 15px 50px rgba(220, 20, 60, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Navbar Styles */
+        #nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(139, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #nav.scrolled {
+            height: 70px;
+            background: rgba(139, 0, 0, 0.98);
+        }
+
+        #logo {
+            height: 60px;
+            width: 60px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 3px solid var(--white);
+            transition: transform 0.3s ease;
+            animation: fadeInLeft 0.8s ease;
+        }
+
+        #logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        #logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #navContents {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        #navContents a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        #navContents a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        #navContents a:hover::after {
+            width: 100%;
+        }
+
+        #navContents a:hover {
+            color: var(--accent-color);
+        }
+
+        #reservations {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.3);
+            animation: fadeInRight 0.8s ease;
+        }
+
+        #reservations:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 20, 60, 0.4);
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--white);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            margin-top: 80px;
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+            animation: zoomIn 1.2s ease;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.7), rgba(220, 20, 60, 0.5));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-overlay h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s both;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-overlay p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--white);
+            max-width: 800px;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.4s both;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 5rem 5%;
+            animation: fadeIn 1s ease;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            display: block;
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            animation: fadeInRight 1s ease;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 8px solid var(--primary-color);
+            box-shadow: var(--shadow);
+            transition: all 0.5s ease;
+        }
+
+        .about-image img:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Mission Vision Section */
+        .mission-section {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--primary-light), var(--white));
+        }
+
+        .mission-intro {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .mission-intro p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.9;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: var(--white);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            fill: var(--primary-color);
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .card-icon {
+            fill: var(--white);
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            transition: color 0.4s ease;
+        }
+
+        .card:hover h2 {
+            color: var(--white);
+        }
+
+        .card p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            transition: color 0.4s ease;
+        }
+
+        .card:hover p {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Footer */
+        #footer {
+            background: linear-gradient(135deg, var(--primary-dark), #5a0000);
+            color: var(--white);
+            padding: 4rem 5%;
+            animation: fadeIn 1s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .footer-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-image img {
+            width: 100%;
+            max-width: 300px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .footer-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .poweredby {
+            background: #2a0000;
+            text-align: center;
+            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(1.2);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            #navContents {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(139, 0, 0, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+            }
+
+            #navContents.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            #reservations {
+                position: static;
+            }
+
+            .about-content {
+                gap: 2rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #nav {
+                padding: 0 4%;
+            }
+
+            .hero-section {
+                height: 60vh;
+                min-height: 400px;
+            }
+
+            .about-section,
+            .mission-section {
+                padding: 3rem 4%;
+            }
+
+            .card {
+                padding: 2rem 1.5rem;
+            }
+
+            #footer {
+                padding: 3rem 4%;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading Animation */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="nav">
+        <div id="logo">
+            <img src="logo.jpeg" alt="Annamal Catering Logo">
+        </div>
+        
+        <div id="navContents">
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#menu">Menu</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#faq">FAQ</a>
+            <a href="#blog">Blog</a>
+            <a href="#contact">Contact Us</a>
+        </div>
+
+        <button id="reservations">Reservations</button>
+        
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <img class="hero-image" src="https://images.unsplash.com/photo-1555244162-803834f70033?w=1920&h=1080&fit=crop" alt="Catering Services">
+        <div class="hero-overlay">
+            <h1>About Us</h1>
+            <p>Welcome to Annamal Catering! We are dedicated to providing the best services to our customers. Our team of professionals works tirelessly to ensure customer satisfaction and deliver high-quality results. Thank you for choosing us!</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section scroll-reveal" id="about">
+        <h2 class="section-title">Our Story</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>At Annamal Catering, we believe that great food brings people together. With over a decade of experience in the catering industry, we've perfected the art of creating memorable dining experiences for every occasion.</p>
+                <p>Our passion for culinary excellence drives us to source only the finest ingredients and employ innovative cooking techniques. Whether it's an intimate gathering or a grand celebration, we treat every event with the same level of care and attention to detail.</p>
+                <p>From traditional flavors to contemporary cuisine, our diverse menu caters to all tastes and preferences. We pride ourselves on our ability to customize our services to meet your specific needs, ensuring that your event is truly one-of-a-kind.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=800&fit=crop" alt="Our Kitchen">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Vision Values Section -->
+    <section class="mission-section scroll-reveal">
+        <h2 class="section-title">Annamal Catering: Making Your Guests More Delighted with Our Food</h2>
+        <div class="mission-intro">
+            <p>Meet our dedicated team of professionals who are committed to delivering exceptional service and ensuring customer satisfaction. We combine tradition with innovation to create unforgettable culinary experiences that leave lasting impressions.</p>
+        </div>
+
+        <div class="cards-container">
+            <div class="card scroll-reveal">
+                <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"/>
+                </svg>
+                <h2>Vision</h2>
+                <p>To be the leading catering service provider known for excellence and innovation. We envision a future where every meal we serve creates lasting memories and brings joy to our clients and their guests.</p>
+            </div>
+
+            <div class="card scroll-reveal">
+<svg class="card-icon" http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M127.9 78.4C127.1 70.2 120.2 64 112 64C103.8 64 96.9 70.2 96 78.3L81.9 213.7C80.6 219.7 80 225.8 80 231.9C80 277.8 115.1 315.5 160 319.6L160 544C160 561.7 174.3 576 192 576C209.7 576 224 561.7 224 544L224 319.6C268.9 315.5 304 277.8 304 231.9C304 225.8 303.4 219.7 302.1 213.7L287.9 78.3C287.1 70.2 280.2 64 272 64C263.8 64 256.9 70.2 256.1 78.4L242.5 213.9C241.9 219.6 237.1 224 231.4 224C225.6 224 220.8 219.6 220.2 213.8L207.9 78.6C207.2 70.3 200.3 64 192 64C183.7 64 176.8 70.3 176.1 78.6L163.8 213.8C163.3 219.6 158.4 224 152.6 224C146.8 224 142 219.6 141.5 213.9L127.9 78.4zM512 64C496 64 384 96 384 240L384 352C384 387.3 412.7 416 448 416L480 416L480 544C480 561.7 494.3 576 512 576C529.7 576 544 561.7 544 544L544 96C544 78.3 529.7 64 512 64z"/></svg>
+                <h2>Mission</h2>
+                <p>Our mission is to deliver exceptional catering services that exceed expectations. We are committed to using fresh, quality ingredients and providing personalized attention to make every event special and memorable.</p>
+            </div>
+
+            <div class="card scroll-reveal">
+                <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+                </svg>
+                <h2>Core Values</h2>
+                <p>Quality, integrity, and customer satisfaction are at the heart of everything we do. We believe in transparency, sustainability, and creating meaningful connections through exceptional food and service.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h2>Location</h2>
+                <p>226, South Masi Street, 1st Floor</p>
+                <p>Near Mela Masi Street Junction</p>
+                <p>Madurai, Tamil Nadu 625009</p>
+                <p style="margin-top: 1rem;">📧 annamma@gmail.com</p>
+                <p>📞 +91 98765 43210</p>
+            </div>
+
+            <div class="footer-section">
+                <h2>Opening Hours</h2>
+                <p>We're here to serve you</p>
+                <p style="font-size: 1.2rem; margin-top: 1rem; color: var(--accent-color);">Monday - Sunday</p>
+                <p style="font-size: 1.1rem;">24/7 Service Available</p>
+            </div>
+
+            <div class="footer-section footer-image">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=500&fit=crop" alt="Delicious Food">
+            </div>
+        </div>
+    </footer>
+
+    <div class="poweredby">
+        <h5>Copyright 2025 @ All Rights Reserved | Powered By Annamal Catering</h5>
+    </div>
+
+    <script>
+        // Page Loader
+        window.addEventListener('load', () => {
+            const loader = document.querySelector('.page-loader');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 1000);
+        });
+
+        // Navbar Scroll Effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navContents = document.getElementById('navContents');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navContents.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#navContents a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navContents.classList.remove('active');
+            });
+        });
+
+        // Scroll Reveal Animation
+        const scrollReveal = () => {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const revealPoint = 150;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', scrollReveal);
+        scrollReveal(); // Initial check
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Reservation Button
+        document.getElementById('reservations').addEventListener('click', () => {
+            alert('Thank you for your interest! Our reservation system will be available soon. Please call us at +91 98765 43210 to make a reservation.');
+        });
+
+        // Parallax Effect for Hero Image
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImage = document.querySelector('.hero-image');
+            if (heroImage) {
+                heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add stagger animation to cards
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>
